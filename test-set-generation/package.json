@@ -1,0 +1,10 @@
+{
+  "name": "test-set-generation",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^10.1.0",
+    "node-fetch": "2"
+  }
+}
