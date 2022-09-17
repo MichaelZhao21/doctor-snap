@@ -20,8 +20,7 @@ function setup() {
 
 function draw() {
     background(249, 239, 252);
-    // if (curr === 140) {
-    if (curr === 6) {
+    if (curr === 140) {
         // We are DONE!!!!
         done = true;
         textSize(50);
