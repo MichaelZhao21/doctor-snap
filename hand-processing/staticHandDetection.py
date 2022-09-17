@@ -7,7 +7,7 @@ import mediapipe as mp
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
 import time
-
+handsList = []
 # For static images:
 with mp_hands.Hands(
     static_image_mode=True,
@@ -15,7 +15,7 @@ with mp_hands.Hands(
     min_detection_confidence=0.5) as hands:
     # Read an image, flip it around y-axis for correct handedness output (see
     # above).
-    image = cv2.imread('hand.jpg')  #Insert your Image Here
+    image = cv2.imread('michao-hands.png')  #Insert your Image Here
     # Convert the BGR image to RGB before processing.
     results = hands.process(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
     if not results.multi_hand_landmarks:
@@ -47,9 +47,9 @@ with mp_hands.Hands(
             c = (((y_max - y_min) - (x_max - x_min))) / 2
             x_max += c
             x_min -= c
-    print(x_max)
-    print(x_min)
-    print(y_max)
-    print(y_min)
+        coordinates = (x_min, y_min, x_max, y_max)
+        handsList.append(coordinates)
+
+    print(handsList)
     cv2.imwrite('hands.png', annotated_image)
 
