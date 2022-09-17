@@ -2,12 +2,14 @@ let img;
 let loading;
 let aggRectList = [];
 let aggIndex = [];
+let rectDisplayList = [];
 let rectList = [];
 let done = false;
 let button;
 let startX;
 let startY;
 let adj;
+let notAdj = true;
 
 let curr = 0,
     total = 140;
@@ -18,7 +20,8 @@ function setup() {
 
 function draw() {
     background(249, 239, 252);
-    if (curr === 5) {
+    // if (curr === 140) {
+    if (curr === 6) {
         // We are DONE!!!!
         done = true;
         textSize(50);
@@ -40,6 +43,7 @@ function draw() {
                     loadImage(`image-${curr}.png`, (i) => {
                         loading = false;
                         img = i;
+                        notAdj = true;
                     });
                 } else {
                     loading = false;
@@ -53,15 +57,18 @@ function draw() {
             curr++;
         }
     }
-    if (img) {
+    if (img && notAdj) {
         adj = 1;
         adj = grow(img.height, adj);
         adj = shrink(img.height, adj);
-        image(img, 10, 80);
         img.resize(img.width * adj, img.height * adj);
+        notAdj = false;
+    }
+    if (img) {
+        image(img, 10, 80);
     }
     fill('rgba(165, 107, 249, 0.2)');
-    rectList.forEach((r) => {
+    rectDisplayList.forEach((r) => {
         rect(r[0], r[1], r[2] - r[0], r[3] - r[1]);
     });
     fill('rgba(249, 192, 107, 0.2)');
@@ -70,6 +77,7 @@ function draw() {
 }
 
 function grow(x, acc) {
+    console.log(acc, x * acc, windowHeight * 0.75);
     if (x * acc < windowHeight * 0.75) {
         return grow(x, acc * 1.2);
     }
@@ -103,6 +111,7 @@ function keyPressed() {
         aggRectList.push(rectList);
         aggIndex.push(curr);
         rectList = [];
+        rectDisplayList = [];
         curr++;
         img = null;
     } else if (key === 'Escape') {
@@ -115,8 +124,15 @@ function mouseClicked() {
     if (done) return;
 
     if (startX) {
+        console.log(adj);
         // complete rectangle
-        rectList.push([startX, startY, mouseX, mouseY]);
+        rectDisplayList.push([startX, startY, mouseX, mouseY]);
+        rectList.push([
+            (startX - 10) / adj,
+            (startY - 80) / adj,
+            (mouseX - 10) / adj,
+            (mouseY - 80) / adj,
+        ]);
 
         startX = null;
         startY = null;

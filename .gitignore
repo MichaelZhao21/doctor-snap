@@ -1,2 +1,5 @@
 test-set-generation/downloads
+test-set-generation/cropped
+test-set-generation/bounds-data.json
 */node_modules
+*/venv
