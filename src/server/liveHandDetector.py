@@ -1,10 +1,11 @@
 import cv2
 import mediapipe as mp
+
+from gloves import cut_img
+from gloves import is_gloved
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
-
-handsList = []
 
 # For webcam input:
 cap = cv2.VideoCapture(0)
@@ -57,16 +58,14 @@ with mp_hands.Hands(
             x_max += c
             x_min -= c
         coordinates = (x_min, y_min, x_max, y_max)
-        handsList.append(coordinates)
         cv2.rectangle(image, (int(x_min), int(y_min)), (int(x_max), int(y_max)), (0, 255, 0), 2)
-        #if (glove):
-          #cv2.putText(image, "glove",(x_max, y_min - 10), cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 0, 200), 2)
-        #else:
-          #cv2.putText(image, "no glove",(x_max, y_min - 10), cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 0, 200), 2)
+        if (not is_gloved(cut_img(image, coordinates))):
+          cv2.putText(image, 'glove',(int(x_min), int(y_min - 12)), cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 0, 200), 2)
+        else:
+          cv2.putText(image, 'no glove',(int(x_min), int(y_min - 12)), cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 0, 200), 2)
     
     # Flip the image horizontally for a selfie-view display.
-    print(handsList)
-    cv2.imshow('MediaPipe Hands', cv2.flip(image, 1))
+    cv2.imshow('Hand Detection', image)
     if cv2.waitKey(5) & 0xFF == 27:
       break
 cap.release()
