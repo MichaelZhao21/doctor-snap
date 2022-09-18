@@ -1,8 +1,9 @@
 from fastai.vision.all import *
 import cv2
+from makemodel import *
 import dill
 
-model = load_learner('model.pkl')
+model = train_model()
 
 def cut_img(img, crop):
     cropped_im = img.crop(tuple(crop))

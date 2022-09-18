@@ -1,6 +1,7 @@
-from gloves import cut_img
-from PIL import Image
+from gloves import is_gloved
+import cv2
+from makemodel import *
 
-with Image.open('glove.jpg') as im:
-    ci = cut_img(im, (10, 10, 100, 100))
-    ci.save('glove-cut.jpg')
+im = cv2.imread('glove.jpg')
+a = is_gloved(im)
+print(a)
