@@ -17,5 +17,7 @@ def cut_img(img, crop):
 def is_gloved(im):
     im_small = cv2.resize(im, (120, 120))
     im_blur = cv2.GaussianBlur(im_small, (3, 3), 0)
-    glove_check, _, _ = model.predict(im_blur)
-    return glove_check
+    glove_check, _, p = model.predict(im_blur)
+    if p[0] > 0.3:
+        return True
+    return False
