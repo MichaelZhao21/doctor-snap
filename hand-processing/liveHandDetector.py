@@ -4,13 +4,13 @@ mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 
-
+handsList = []
 
 # For webcam input:
 cap = cv2.VideoCapture(0)
 with mp_hands.Hands(
     model_complexity=0,
-    max_num_hands=6,
+    max_num_hands=10,
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5) as hands:
   while cap.isOpened():
@@ -56,13 +56,16 @@ with mp_hands.Hands(
             c = (((y_max - y_min) - (x_max - x_min))) / 2
             x_max += c
             x_min -= c
+        coordinates = (x_min, y_min, x_max, y_max)
+        handsList.append(coordinates)
         cv2.rectangle(image, (int(x_min), int(y_min)), (int(x_max), int(y_max)), (0, 255, 0), 2)
-        print(x_min)
-        print(x_max)
-        print(y_min)
-        print(y_max)
+        #if (glove):
+          #cv2.putText(image, "glove",(x_max, y_min - 10), cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 0, 200), 2)
+        #else:
+          #cv2.putText(image, "no glove",(x_max, y_min - 10), cv2.FONT_HERSHEY_TRIPLEX, 1, (0, 0, 200), 2)
     
     # Flip the image horizontally for a selfie-view display.
+    print(handsList)
     cv2.imshow('MediaPipe Hands', cv2.flip(image, 1))
     if cv2.waitKey(5) & 0xFF == 27:
       break
