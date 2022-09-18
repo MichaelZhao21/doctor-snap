@@ -18,7 +18,7 @@ def train_model():
         label_func=lambda x: x[0] == 'y', item_tfms=Resize(224))
 
     learn = vision_learner(dls, resnet34, metrics=error_rate)
-    learn.fit_one_cycle(1, lr_max=slice(1e-4, 1e-3))
+    # learn.fit_one_cycle(1, lr_max=slice(1e-4, 1e-3))
     learn.fine_tune(1)
     return learn
 
