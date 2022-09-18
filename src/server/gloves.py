@@ -2,12 +2,17 @@ from fastai.vision.all import *
 import cv2
 from makemodel import *
 import dill
+import numpy as np
 
 model = train_model()
 
 def cut_img(img, crop):
-    cropped_im = img.crop(tuple(crop))
-    return cropped_im
+    color_coverted = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    pil_im = Image.fromarray(color_coverted)
+    cropped_im = pil_im.crop(tuple(crop))
+    cv_im = np.array(cropped_im)
+    cv_im = cv_im[:, :, ::-1].copy()
+    return cv_im
 
 def is_gloved(im):
     im_small = cv2.resize(im, (120, 120))
