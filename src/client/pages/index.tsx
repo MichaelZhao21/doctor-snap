@@ -36,6 +36,7 @@ const Home: NextPage = () => {
                     src="/medicine.jpg"
                 />
                 <div
+                    className="title"
                     style={{
                         position: "absolute",
                         top: "4rem",
@@ -99,7 +100,7 @@ const Home: NextPage = () => {
                     </div>
                     <div className="inner-card">
                         <div className="ic-sub">Cost of Gloves Used</div>
-                        <div className="ic-text">$21.93</div>
+                        <div className="ic-text">$3.06</div>
                     </div>
                 </div>
             </div>
