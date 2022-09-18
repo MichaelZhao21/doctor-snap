@@ -1,6 +1,15 @@
 import type { NextPage } from "next";
+import { useState } from "react";
 
 const Home: NextPage = () => {
+    const [num, setNum] = useState(10);
+    const [mins, setMins] = useState(90.4);
+
+    const increment = () => {
+        setNum(num + 1);
+        setMins(Math.random() * 20 + 80);
+    };
+
     return (
         <div
             style={{
@@ -12,6 +21,25 @@ const Home: NextPage = () => {
                 height: "100%",
             }}
         >
+            <button
+                style={{
+                    position: "fixed",
+                    bottom: "2rem",
+                    right: "2rem",
+                    borderRadius: "100rem",
+                    border: "none",
+                    fontSize: "3rem",
+                    fontWeight: "700",
+                    width: "4rem",
+                    height: "4rem",
+                    filter: "drop-shadow(0 0 0.2rem #aaaaaa)",
+                    transition: "0.2s",
+                    cursor: "pointer",
+                }}
+                onClick={increment}
+            >
+                +
+            </button>
             <div
                 className="card"
                 style={{
@@ -76,13 +104,13 @@ const Home: NextPage = () => {
                 >
                     <div className="inner-card">
                         <div className="ic-sub">Gloves Used this Week</div>
-                        <div className="ic-text">10</div>
+                        <div className="ic-text">{num}</div>
                     </div>
                     <div className="inner-card">
                         <div className="ic-sub">
                             Minutes Wearing your Current Pair
                         </div>
-                        <div className="ic-text">76</div>
+                        <div className="ic-text">{mins.toFixed(1)}</div>
                     </div>
                 </div>
                 <div
@@ -94,13 +122,15 @@ const Home: NextPage = () => {
                 >
                     <div className="inner-card">
                         <div className="ic-sub">
-                            Carbon Emissions this Week (CO2e)
+                            Carbon Emissions this Week (kg CO2e)
                         </div>
-                        <div className="ic-text">12.5</div>
+                        <div className="ic-text">{(num * 0.21).toFixed(3)}</div>
                     </div>
                     <div className="inner-card">
                         <div className="ic-sub">Cost of Gloves Used</div>
-                        <div className="ic-text">$3.06</div>
+                        <div className="ic-text">
+                            ${(num * 0.15).toFixed(2)}
+                        </div>
                     </div>
                 </div>
             </div>
