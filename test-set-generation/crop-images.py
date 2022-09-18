@@ -22,7 +22,8 @@ for image_data in data:
 
     # Loop through crops
     for i, crop in enumerate(crops):
-        cropped_im = im.crop(tuple(crop))
-        cropped_im.save(f'cropped/image-{id}-{i}.png')
+        if (crop[0] < crop[2] and crop[1] < crop[3]):
+            cropped_im = im.crop(tuple(crop))
+            cropped_im.save(f'cropped/image-{id}-{i}.png')
     
     print(f'Completed image {id}, cropped {len(crops)} images!')
